@@ -5,9 +5,11 @@ import { LinkPresets } from "../constants/link-presets";
 import { LinkPreset, type NavBarLink } from "../types/config";
 import { url } from "../utils/url-utils";
 import LightDarkSwitch from "./LightDarkSwitch.svelte";
+
 import Search from "./Search.svelte";
 import DisplaySettings from "./widget/DisplaySettings.svelte";
 import NavMenuPanel from "./widget/NavMenuPanel.astro";
+import DropdownMenu from "./widget/DropdownMenu.astro";
 
 const className = Astro.props.class;
 
@@ -31,8 +33,26 @@ let links: NavBarLink[] = navBarConfig.links.map(
                 {siteConfig.title}
             </div>
         </a>
-        <div class="hidden md:flex">
-            {links.map((l) => {
+       <div class="hidden md:flex items-center">
+
+    <DropdownMenu
+        name="文章"
+        icon="material-symbols:article-outline"
+        items={[
+            {
+                name: "文章列表",
+                url: "/",
+                icon: "material-symbols:format-list-bulleted-rounded",
+            },
+            {
+                name: "归档",
+                url: "/archive/",
+                icon: "material-symbols:archive-outline",
+            },
+        ]}
+    />
+
+    {links.map((l) => {
                 return <a aria-label={l.name} href={l.external ? l.url : url(l.url)} target={l.external ? "_blank" : null}
                           class="btn-plain scale-animation rounded-lg h-11 font-bold px-5 active:scale-95"
                 >
